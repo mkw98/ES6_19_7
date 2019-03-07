@@ -21,26 +21,6 @@ class Stopwatch extends React.Component {
         });
     }
 
-	///constructor(display) {
-	//	this.running = false;
-	//	this.display = display;
-	//	this.reset();
-	//	this.print(this.times);
-	//} //nie ma średnika ani przecinka
-	
-    //reset() {
-     //   this.times = {
-     //       minutes: 0,
-       //     seconds: 0,
-        //    miliseconds: 0
-   //     };
-   //     this.print();
-   // }
-
-	//print() { //metoda, która ustawia wewnętrzny tekst elementu DOM, pod atrybutem display
-	//	this.display.innerText = this.format(this.times);
-	//} ///
-	
 
 	format(times) { //metoda, która zwraca szablon, który wykorzystuje obiekt(times) podany do metody
 		return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
@@ -63,13 +43,13 @@ class Stopwatch extends React.Component {
 	calculate() {
 		const times = this.state.times;
 		times.miliseconds += 1;
-		if (this.times.miliseconds >= 100) {
-			this.times.seconds += 1;
-			this.times.miliseconds = 0;
+		if (times.miliseconds >= 100) {
+			times.seconds += 1;
+			times.miliseconds = 0;
 		}
-		if (this.times.seconds >= 60) {
-			this.times.minutes += 1;
-			this.times.seconds = 0;
+		if (times.seconds >= 60) {
+			times.minutes += 1;
+			times.seconds = 0;
 		}
 		this.setState({times});
 	}
@@ -79,9 +59,9 @@ class Stopwatch extends React.Component {
 		this.running = false;
 		clearInterval(this.watch);
 	}
-    watchReset() {
-         this.reset();
-    }
+//    watchReset() {
+//         this.reset();
+//    }
 
 	render() {
     	return (
@@ -100,13 +80,14 @@ class Stopwatch extends React.Component {
 }
 
 
-
 function pad0(value) {
 	let result = value.toString(); //przekształcenie wartości liczbowej w string
 	if (result.length < 2) {
 		result = '0' + result;
 	}
 	return result;
+}
 
-const app = document.getElementById('app')
+const app = document.getElementById('app');
 ReactDOM.render(<Stopwatch />, app);
+
