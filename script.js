@@ -1,24 +1,47 @@
-class Stopwatch {
-	constructor(display) {
-		this.running = false;
-		this.display = display;
-		this.reset();
-		this.print(this.times);
-	} //nie ma średnika ani przecinka
-	
-    reset() {
-        this.times = {
-            minutes: 0,
-            seconds: 0,
-            miliseconds: 0
-        };
-        this.print();
+class Stopwatch extends React.Component {
+	constructor(props) {
+        super(props);
+        this.state = {
+            times: {
+                minutes: 0,
+                seconds: 0,
+                miliseconds: 0
+            }
+        }
+        this.running = false;
     }
 
-	print() { //metoda, która ustawia wewnętrzny tekst elementu DOM, pod atrybutem display
-		this.display.innerText = this.format(this.times);
-	}
+    reset () {
+        this.setState({
+            times: {
+                minutes: 0,
+                seconds: 0,
+                miliseconds: 0
+            }
+        });
+    }
+
+	///constructor(display) {
+	//	this.running = false;
+	//	this.display = display;
+	//	this.reset();
+	//	this.print(this.times);
+	//} //nie ma średnika ani przecinka
 	
+    //reset() {
+     //   this.times = {
+     //       minutes: 0,
+       //     seconds: 0,
+        //    miliseconds: 0
+   //     };
+   //     this.print();
+   // }
+
+	//print() { //metoda, która ustawia wewnętrzny tekst elementu DOM, pod atrybutem display
+	//	this.display.innerText = this.format(this.times);
+	//} ///
+	
+
 	format(times) { //metoda, która zwraca szablon, który wykorzystuje obiekt(times) podany do metody
 		return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
 	}
@@ -30,14 +53,16 @@ class Stopwatch {
 		}
 	}
 
+
 	step() {
 		if (!this.running) return;
 		this.calculate();
-		this.print();
+	//	this.print();
 	}
 
 	calculate() {
-		this.times.miliseconds += 1;
+		const times = this.state.times;
+		times.miliseconds += 1;
 		if (this.times.miliseconds >= 100) {
 			this.times.seconds += 1;
 			this.times.miliseconds = 0;
@@ -46,8 +71,10 @@ class Stopwatch {
 			this.times.minutes += 1;
 			this.times.seconds = 0;
 		}
+		this.setState({times});
 	}
-
+	
+  //  }
 	stop() {
 		this.running = false;
 		clearInterval(this.watch);
@@ -55,7 +82,23 @@ class Stopwatch {
     watchReset() {
          this.reset();
     }
+
+	render() {
+    	return (
+        	<div className='stopwatch'>
+            	<div className='controls'>
+                	<button onClick={() => this.start()}>Start</button>
+                	<button onClick={() => this.stop()}>Stop</button>
+                	<button onClick={() => this.reset()}>Reset</button>
+            	</div>
+            	<div>
+            	{this.format(this.state.times)}
+            	</div>
+        	</div>
+    	)
+	}     
 }
+
 
 
 function pad0(value) {
@@ -64,13 +107,6 @@ function pad0(value) {
 		result = '0' + result;
 	}
 	return result;
-}
 
-const stopwatch = new Stopwatch(document.querySelector('.stopwatch'));
-let startButton = document.getElementById('start');
-let stopButton = document.getElementById('stop');
-let resetButton = document.getElementById('reset');
-
-startButton.addEventListener('click', () => stopwatch.start());
-stopButton.addEventListener('click', () => stopwatch.stop());
-resetButton.addEventListener('click', () => stopwatch.watchReset());
+const app = document.getElementById('app')
+ReactDOM.render(<Stopwatch />, app);
