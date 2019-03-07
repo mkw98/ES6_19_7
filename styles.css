@@ -1,0 +1,50 @@
+* {
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+
+a {
+  text-decoration:none;
+}
+
+.controls {
+  text-align: center;
+  background-color: lavender;
+  margin-left:40%;
+  margin-right:40%;
+  margin-top:10%;
+  padding: 10px;
+  text-transform:uppercase;
+}
+.stopwatch {
+  text-align: center;
+  background-color: lavender;
+  text-decoration:none;
+  margin-left:40%;
+  margin-right:40%;
+  padding: 10px;
+  text-transform:uppercase;
+}
+
+.reset{
+  text-align: center;
+  background-color: lavender;
+  text-decoration:none;
+  margin-left:40%;
+  margin-right:40%;
+  padding: 10px;
+  text-transform:uppercase;
+}
+
+#start:hover {
+    background-color: white;
+}
+
+#stop:hover {
+    background-color: white;
+}
+
+#reset:hover {
+    background-color: white;
+}
